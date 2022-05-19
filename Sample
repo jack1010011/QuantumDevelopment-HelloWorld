@@ -1,0 +1,33 @@
+from qiskit import IBMQ
+
+options = {
+	'backend_name': 'ibmq_qasm_simulator'
+}
+
+runtime_inputs = {
+	# Number of iterations to run.
+  # Each iteration generates a runs
+  # a random circuit.
+  'iterations': 1 # integer
+}
+
+IBMQ.load_account()
+provider = IBMQ.get_provider(
+	hub='ibm-q',
+	group='open',
+	project='main'
+)
+
+job = provider.runtime.run(
+	program_id='hello-world',
+	options=options,
+	inputs=runtime_inputs
+)
+
+# Job id
+print(job.job_id())
+# See job status
+print(job.status())
+
+# Get results
+result = job.result()
